@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>..\..\tsdn.Common.Web\bin\Debug\netcoreapp2.0\tsdn.Api.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>..\..\Citms.Common.Web\bin\Release\netcoreapp2.0\Citms.Api.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\tsdn.Core\tsdn.Common.MVC\tsdn.Common.MVC.csproj" />
+    <ProjectReference Include="..\..\tsdn.Core\tsdn.Common.Utility\tsdn.Common.Utility.csproj" />
+    <ProjectReference Include="..\tsdn.Entity\tsdn.Entity.csproj" />
+    <ProjectReference Include="..\tsdn.Service.Contract\tsdn.Service.Contract.csproj" />
+  </ItemGroup>
+
+</Project>

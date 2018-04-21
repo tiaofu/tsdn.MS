@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>..\..\tsdn.Common.Web\bin\Debug\netcoreapp2.0\tsdn.Common.Utility.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>..\..\Citms.Common.Web\bin\Release\netcoreapp2.0\Citms.Common.Utility.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="DBContext\DapperRepository.AddRange.cs" />
+    <Compile Remove="DBContext\DBContextServiceCollectionExtensions.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Citms.Oracle.ManagedDataAccess" Version="1.0.0" />
+    <PackageReference Include="Dapper" Version="1.50.4" />
+    <PackageReference Include="DotNetCore.NPOI" Version="1.0.2" />
+    <PackageReference Include="Funcular.DotNetCore.IdGenerators" Version="1.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="PinYinConverterCore" Version="1.0.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\tsdn.Common.Core\tsdn.Common.Core.csproj" />
+    <ProjectReference Include="..\tsdn.Common.Dapper\tsdn.Common.Dapper.csproj" />
+  </ItemGroup>
+
+</Project>

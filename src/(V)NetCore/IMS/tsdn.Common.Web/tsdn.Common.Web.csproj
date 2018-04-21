@@ -1,0 +1,88 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <Description>中科Web站点容器</Description>
+    <Company>武汉中科通达高新技术股份有限公司</Company>
+    <Authors>中科通达</Authors>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\netcoreapp2.0\tsdn.Common.Web.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\netcoreapp2.0\Citms.Common.Web.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="DLL\**" />
+    <Compile Remove="wwwroot\XMLCommand\**" />
+    <Compile Remove="XMLCommand\**" />
+    <Content Remove="DLL\**" />
+    <Content Remove="wwwroot\XMLCommand\**" />
+    <Content Remove="XMLCommand\**" />
+    <EmbeddedResource Remove="DLL\**" />
+    <EmbeddedResource Remove="wwwroot\XMLCommand\**" />
+    <EmbeddedResource Remove="XMLCommand\**" />
+    <None Remove="DLL\**" />
+    <None Remove="wwwroot\XMLCommand\**" />
+    <None Remove="XMLCommand\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="wwwroot.rar" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="4.6.2" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
+    <PackageReference Include="Microsoft.AspNetCore.SignalR" Version="1.0.0-preview1-final" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\tsdn.Core\tsdn.Common.Config\tsdn.Common.Config.csproj" />
+    <ProjectReference Include="..\tsdn.Core\tsdn.Common.Core\tsdn.Common.Core.csproj" />
+    <ProjectReference Include="..\tsdn.Core\tsdn.Common.HttpProxy\tsdn.Common.HttpProxy.csproj" />
+    <ProjectReference Include="..\tsdn.Core\tsdn.Common.MVC\tsdn.Common.MVC.csproj" />
+    <ProjectReference Include="..\tsdn.Core\tsdn.Common.SignalR\tsdn.Common.SignalR.csproj" />
+    <ProjectReference Include="..\tsdn.Core\tsdn.Common.Utility\tsdn.Common.Utility.csproj" />
+    <ProjectReference Include="..\tsdn.Core\tsdn.RemoteEventBus.RabbitMQ\tsdn.RemoteEventBus.RabbitMQ.csproj" />
+    <ProjectReference Include="..\tsdn.Core\tsdn.RemoteEventBus\tsdn.RemoteEventBus.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Config\配置规则说明.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Startup_Windows.bat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Template\Excel\设备批量注册.xls">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Config\Config.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="rd/s/q $(TargetDir)XmlCommand&#xD;&#xA;xcopy $(ProjectDir)XmlCommand\*.config $(TargetDir)XmlCommand\ /s/d/r/y&#xD;&#xA;xcopy $(ProjectDir)wwwroot\*.* $(TargetDir)wwwroot\ /s/d/r/y" />
+  </Target>
+
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JSONSchema="" /></VisualStudio></ProjectExtensions>
+
+</Project>

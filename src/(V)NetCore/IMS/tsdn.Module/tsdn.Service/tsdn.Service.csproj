@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>..\..\tsdn.Common.Web\bin\Debug\netcoreapp2.0\tsdn.Service.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>..\..\Citms.Common.Web\bin\Release\netcoreapp2.0\Citms.Service.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="新文件夹1\**" />
+    <EmbeddedResource Remove="新文件夹1\**" />
+    <None Remove="新文件夹1\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Autofac.Extras.DynamicProxy" Version="4.4.0" />
+    <PackageReference Include="Castle.Core" Version="4.2.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\tsdn.Core\tsdn.Common.Aop\tsdn.Common.Aop.csproj" />
+    <ProjectReference Include="..\..\tsdn.Core\tsdn.Common.Config\tsdn.Common.Config.csproj" />
+    <ProjectReference Include="..\..\tsdn.Core\tsdn.Common.Dapper\tsdn.Common.Dapper.csproj" />
+    <ProjectReference Include="..\..\tsdn.Core\tsdn.Common.Utility\tsdn.Common.Utility.csproj" />
+    <ProjectReference Include="..\tsdn.Entity\tsdn.Entity.csproj" />
+    <ProjectReference Include="..\tsdn.Service.Contract\tsdn.Service.Contract.csproj" />
+  </ItemGroup>
+
+</Project>

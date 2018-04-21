@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SignalR测试</title>
+</head>
+<body>
+    你的昵称：<span id="txt_nickName"></span><br />
+    <span>聊天对象的昵称（多个逗号分隔，为空进行群发)：</span><input type="text" id="txt_other" /><br />
+    <span>请输入您要发送的消息内容：</span><input type="text" id="txt_msg" /><br />
+    <input type="button" value="发送" id="btn_send" onclick="sendMsg()" /><br />
+    共收到<span id="txt_Total" style="color:red;">0</span>条消息
+    <div style="position: absolute;top: 0;left:500px;width: 400px">
+        <ul id="ul_recive"></ul>
+    </div>
+    <!--git源码地址  https://github.com/aspnet/SignalR-->
+    <!--npm包下载  npm install @aspnet/signalr --registry https://dotnet.myget.org/f/aspnetcore-dev/npm/ -->
+    <script src="js/signalr.min.js"></script>
+    <script>
+        var hubConnection = new signalR.HubConnection('http://' + document.location.host + '/signalR', { transport: signalR.TransportType.WebSockets });
+        var total = 0;
+        var groupName = prompt('请输入你的昵称');
+        document.getElementById("txt_nickName").innerText = groupName;
+        hubConnection.start().then(function () {
+            hubConnection.invoke('JoinGroup', [groupName]);
+        }).catch(function (err) {
+            console.error(err)
+        });
+
+
+        hubConnection.on('Push', function (data) {
+            console.log(data)
+            total++;
+            document.getElementById("txt_Total").innerText = total;
+            var fragment = document.createDocumentFragment();
+            li = document.createElement('li');
+            li.innerText = JSON.stringify(data);
+            fragment.appendChild(li);
+            var parentNode = document.getElementById("ul_recive");
+            if (parentNode.childNodes.length >= 15) {
+                for (var i = 0; i < parentNode.childNodes.length; i++) {
+                    parentNode.removeChild(parentNode.childNodes[i]);
+                }
+            }
+            parentNode.appendChild(fragment);
+        });
+
+
+
+        function sendMsg() {
+            var reciver = document.getElementById("txt_other").value;
+            var msg = document.getElementById("txt_msg").value;
+            if (!msg) {
+                alert('请输入消息内容');
+                return;
+            }
+            document.getElementById("txt_msg").value = "";
+            hubConnection.invoke('Push', { Message: msg, "MsgType": "QQ" }, reciver?reciver.split(','):[]);
+        }
+    </script>
+</body>
+</html>

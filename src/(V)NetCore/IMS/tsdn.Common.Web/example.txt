@@ -1,0 +1,28 @@
+﻿            //var remoteEventBus = IocManager.Instance.Resolve<IRemoteEventBus>();
+            //Task.Factory.StartNew(() =>
+            //{
+            //    while (true)
+            //    {
+            //        const string type = "ConfigHandlerChanged";
+            //        const string topic = "Database.Changed.ConfigHandler";
+            //        var eventDate = new RemoteEventData(type)
+            //        {
+            //            Data = new List<object>() { new { ChangeType = "Update", Id = "RedisConfig" } }
+            //        };
+            //        remoteEventBus.Publish(topic, eventDate);
+
+            //        Task.Delay(3000).Wait();
+            //    }
+            //});
+
+
+			var messagePush = IocManager.Instance.Resolve<IMessagePush>();
+
+            Task.Factory.StartNew(() =>
+            {
+                while (true)
+                {
+                    messagePush.SendToRabbitMQAsync(new RealTime.MessageRecord { MsgType = "后台消息推送", Message = "系统管理员群发：好好学习，天天向上" }, null);
+                    Task.Delay(100).Wait();
+                }
+            });

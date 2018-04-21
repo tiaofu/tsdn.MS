@@ -1,0 +1,52 @@
+﻿/*********************************************************
+ * CopyRight: tiaoshuidenong. 
+ * Author: tiaoshuidenong
+ * Address: wuhan
+ * Create: 2018-04-10 17:44:16
+ * Modify: 2018-04-10 17:44:16
+ * Blog: http://www.cnblogs.com/tiaoshuidenong/
+ * Description: 尚未编写描述
+ *********************************************************/
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
+using Dapper;
+
+
+namespace tsdn.Common.Dapper
+{
+    /// <summary>
+    ///     Base Repository
+    /// </summary>
+    public partial class DapperRepository<TEntity>
+        where TEntity : class
+    {
+               /// <inheritdoc />
+        public virtual IEnumerable<TEntity> FindAll(IDbTransaction transaction = null)
+        {
+            return FindAll(null, transaction);
+        }
+
+        /// <inheritdoc />
+        public virtual IEnumerable<TEntity> FindAll(Expression<Func<TEntity, bool>> predicate, IDbTransaction transaction = null)
+        {
+            var queryResult = SqlGenerator.GetSelectAll(predicate);
+            return Connection.Query<TEntity>(queryResult.GetSql(), queryResult.Param, transaction);
+        }
+        
+        /// <inheritdoc />
+        public virtual Task<IEnumerable<TEntity>> FindAllAsync(IDbTransaction transaction = null)
+        {
+            return FindAllAsync(null, transaction);
+        }
+
+        /// <inheritdoc />
+        public virtual Task<IEnumerable<TEntity>> FindAllAsync(Expression<Func<TEntity, bool>> predicate, IDbTransaction transaction = null)
+        {
+            var queryResult = SqlGenerator.GetSelectAll(predicate);
+            return Connection.QueryAsync<TEntity>(queryResult.GetSql(), queryResult.Param, transaction);
+        }
+    }
+}
